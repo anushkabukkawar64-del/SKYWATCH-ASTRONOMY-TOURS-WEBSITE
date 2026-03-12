@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Book Your Experience — SkyWatch Astronomy Tours</title>
+    <meta name="description"
+        content="Book your dark-sky astronomy tour, telescope rental, or celestial event experience with SkyWatch. Includes cloud-out insurance on every booking." />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔭</text></svg>" />
+</head>
+
+<body>
+
+    <canvas id="starfield"></canvas>
+
+    <div class="page-wrapper">
+
+        <!-- ═══════════ NAVBAR ═══════════ -->
+        <nav class="navbar" id="mainNav">
+            <a href="index.html" class="nav-logo">
+                <div class="nav-logo-icon">⊙</div>
+                <span class="nav-logo-text">SkyWatch</span>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="forecast.html">Forecast</a></li>
+                <li><a href="index.html#tours">Tours</a></li>
+                <li><a href="index.html#equipment">Equipment</a></li>
+                <li><a href="index.html#pricing">Pricing</a></li>
+                <li><a href="booking.html" class="nav-cta btn active">Book Now</a></li>
+            </ul>
+            <div class="nav-hamburger" id="hamburger" onclick="toggleMenu()">
+                <span></span><span></span><span></span>
+            </div>
+        </nav>
+
+        <!-- ═══════════ BOOKING PAGE ═══════════ -->
+        <main class="booking-page">
+            <div class="booking-layout">
+
+                <!-- ─── LEFT: Multi-Step Form ─── -->
+                <div class="booking-form-panel">
+
+                    <!-- Header -->
+                    <div class="booking-page-header">
+                        <a href="javascript:history.back()" class="booking-back-btn">← Back</a>
+                        <div>
+                            <div class="section-tag" style="justify-content:flex-start;">✦ Secure Booking</div>
+                            <h1 class="booking-page-title">Book Your<br><span class="booking-title-grad">Dark-Sky
+                                    Experience</span></h1>
+                        </div>
+                    </div>
+
+                    <!-- Step Progress Bar -->
+                    <div class="booking-steps" id="bookingSteps">
+                        <div class="booking-step active" data-step="1">
+                            <div class="booking-step-dot">1</div>
+                            <span>Experience</span>
+                        </div>
+                        <div class="booking-step-line"></div>
+                        <div class="booking-step" data-step="2">
+                            <div class="booking-step-dot">2</div>
+                            <span>Details</span>
+                        </div>
+                        <div class="booking-step-line"></div>
+                        <div class="booking-step" data-step="3">
+                            <div class="booking-step-dot">3</div>
+                            <span>Add-ons</span>
+                        </div>
+                        <div class="booking-step-line"></div>
+                        <div class="booking-step" data-step="4">
+                            <div class="booking-step-dot">4</div>
+                            <span>Confirm</span>
+                        </div>
+                    </div>
+
+                    <!-- ── STEP 1: Choose Experience ── -->
+                    <div class="booking-step-content active" id="step1">
+                        <h2 class="booking-step-title">Choose Your Experience</h2>
+                        <p class="booking-step-desc">Select the celestial event or package you'd like to book.</p>
+
+                        <!-- Event Selector -->
+                        <div class="form-group">
+                            <label class="form-label">Celestial Event</label>
+                            <select class="form-select" id="eventSelect" onchange="updateSummary()">
+                                <option value="">— Select an Event —</option>
+                                <option value="Total Solar Eclipse|14999|Apr 8, 2026|Rajasthan Desert">🌑 Total Solar
+                                    Eclipse — Apr 8 (₹14,999/person)</option>
+                                <option value="Annular Solar Eclipse|9999|Oct 2, 2026|Odisha Coast">🌑 Annular Solar
+                                    Eclipse — Oct 2 (₹9,999/person)</option>
+                                <option value="Perseid Meteor Shower|8499|Aug 11, 2026|Spiti Valley">🌠 Perseid Meteor
+                                    Shower Peak — Aug 11 (₹8,499/person)</option>
+                                <option value="Geminid Meteor Shower|12999|Dec 13, 2026|Hanle Ladakh">🌠 Geminid Meteor
+                                    Shower — Dec 13 (₹12,999/person)</option>
+                                <option value="Eta Aquariid Meteor Shower|6499|May 5, 2026|Rann of Kutch">🌠 Eta
+                                    Aquariid Meteor Shower — May 5 (₹6,499/person)</option>
+                                <option value="Leonid Meteor Storm|11999|Nov 17, 2026|Jaisalmer">🌠 Leonid Meteor Storm
+                                    — Nov 17 (₹11,999/person)</option>
+                                <option value="Strawberry Supermoon|6299|Jun 22, 2026|Hampi">🌕 Strawberry Supermoon —
+                                    Jun 22 (₹6,299/person)</option>
+                                <option value="Blue Moon Total Lunar Eclipse|7499|Jan 31, 2026|Nainital">🌕 Blue Moon
+                                    Lunar Eclipse — Jan 31 (₹7,499/person)</option>
+                                <option value="Jupiter-Saturn Conjunction|5999|Mar 20, 2026|Pench National Park">🪐
+                                    Jupiter–Saturn Conjunction — Mar 20 (₹5,999/person)</option>
+                                <option value="Comet C/2025 K1|19999|Apr 15, 2026|Hanle Ladakh">☄️ Comet C/2025 K1
+                                    Perihelion — Apr 15 (₹19,999/person)</option>
+                                <option value="Saturn's Rings Maximum Tilt|5499|May 15, 2026|Rann of Kutch">🪐 Saturn's
+                                    Rings Max Tilt — May 15 (₹5,499/person)</option>
+                                <option value="Custom Dark-Sky Tour|3999|Flexible|Choose Location">🌌 Custom Dark-Sky
+                                    Tour (₹3,999 base)</option>
+                            </select>
+                        </div>
+
+                        <!-- Package Selector -->
+                        <div class="form-group">
+                            <label class="form-label">Package Tier</label>
+                            <div class="package-grid" id="packageGrid">
+
+                                <div class="package-option" data-pkg="stargazer" data-price="3999"
+                                    onclick="selectPackage(this)">
+                                    <div class="package-option-icon">★</div>
+                                    <div class="package-option-name">Stargazer</div>
+                                    <div class="package-option-price">₹3,999</div>
+                                    <div class="package-option-desc">90mm scope, star chart, guide commentary, hot
+                                        beverages</div>
+                                    <div class="package-option-night">1 Night</div>
+                                </div>
+
+                                <div class="package-option selected" data-pkg="explorer" data-price="8499"
+                                    onclick="selectPackage(this)">
+                                    <div class="package-popular">Most Popular</div>
+                                    <div class="package-option-icon">◒</div>
+                                    <div class="package-option-name">Explorer</div>
+                                    <div class="package-option-price">₹8,499</div>
+                                    <div class="package-option-desc">10" Dobsonian, astrophotography, campfire & dinner
+                                    </div>
+                                    <div class="package-option-night">2 Nights</div>
+                                </div>
+
+                                <div class="package-option" data-pkg="observatory" data-price="18999"
+                                    onclick="selectPackage(this)">
+                                    <div class="package-option-icon">◖</div>
+                                    <div class="package-option-name">Observatory</div>
+                                    <div class="package-option-price">₹18,999</div>
+                                    <div class="package-option-desc">16" scope, private astronomer, luxury stay, all
+                                        meals</div>
+                                    <div class="package-option-night">3 Nights</div>
+                                </div>
+
+                                <div class="package-option" data-pkg="group" data-price="2299"
+                                    onclick="selectPackage(this)">
+                                    <div class="package-option-icon">▣</div>
+                                    <div class="package-option-name">Group</div>
+                                    <div class="package-option-price">₹2,299<span style="font-size:0.7em">/pp</span>
+                                    </div>
+                                    <div class="package-option-desc">Min 10 people, multiple scopes, guided
+                                        constellation tour</div>
+                                    <div class="package-option-night">1 Night</div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div style="display:flex;gap:16px;flex-wrap:wrap;">
+                            <div class="form-group" style="flex:1;min-width:160px;">
+                                <label class="form-label">Number of People</label>
+                                <select class="form-select" id="peopleCount" onchange="updateSummary()">
+                                    <option value="1">1 Person</option>
+                                    <option value="2" selected>2 People</option>
+                                    <option value="3">3 People</option>
+                                    <option value="4">4 People</option>
+                                    <option value="5">5 People</option>
+                                    <option value="6">6 People</option>
+                                    <option value="8">8 People</option>
+                                    <option value="10">10 People (Group)</option>
+                                    <option value="15">15 People (Group)</option>
+                                    <option value="20">20 People (Group)</option>
+                                </select>
+                            </div>
+                            <div class="form-group" style="flex:1;min-width:160px;">
+                                <label class="form-label">Preferred Date</label>
+                                <input type="date" class="form-input" id="preferredDate" onchange="updateSummary()" />
+                            </div>
+                        </div>
+
+                        <!-- Telescope Rental -->
+                        <div class="form-group">
+                            <label class="form-label">Telescope Rental (optional upgrade)</label>
+                            <select class="form-select" id="telescopeSelect" onchange="updateSummary()">
+                                <option value="0|Included with package">Included with package (no extra charge)</option>
+                                <option value="999|Celestron StarSense 90mm">+ Celestron StarSense 90mm — ₹999/night
+                                </option>
+                                <option value="1799|Sky-Watcher 130PDS">+ Sky-Watcher 130PDS (130mm) — ₹1,799/night
+                                </option>
+                                <option value="3299|Dobsonian 10 inch">+ Dobsonian 10" (254mm) — ₹3,299/night</option>
+                                <option value="4999|Celestron CPC 1100">+ Celestron CPC 1100 (280mm) — ₹4,999/night
+                                </option>
+                                <option value="9999|Observatory Ritchey 16 inch">+ Observatory Ritchey 16" —
+                                    ₹9,999/night</option>
+                            </select>
+                        </div>
+
+                        <button class="btn btn-primary btn-block" onclick="goToStep(2)">
+                            Continue to Details →
+                        </button>
+                    </div>
+
+                    <!-- ── STEP 2: Personal Details ── -->
+                    <div class="booking-step-content" id="step2">
+                        <h2 class="booking-step-title">Your Details</h2>
+                        <p class="booking-step-desc">We'll use these to send your booking confirmation and sky briefing.
+                        </p>
+
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                            <div class="form-group">
+                                <label class="form-label">First Name</label>
+                                <input type="text" class="form-input" id="firstName" placeholder="Carl" required />
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Last Name</label>
+                                <input type="text" class="form-input" id="lastName" placeholder="Sagan" required />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" class="form-input" id="emailField" placeholder="you@cosmos.space"
+                                required />
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Phone Number</label>
+                            <input type="tel" class="form-input" id="phoneField" placeholder="+91 98765 43210" />
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Experience Level</label>
+                            <select class="form-select" id="expLevel">
+                                <option>Complete Beginner — never used a telescope</option>
+                                <option>Casual Stargazer — seen the moon &amp; planets</option>
+                                <option>Intermediate — familiar with star charts</option>
+                                <option>Advanced — astrophotography experience</option>
+                                <option>Professional / Researcher</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Special Requests or Accessibility Needs</label>
+                            <textarea class="form-input" id="specialRequests" rows="3"
+                                placeholder="Any dietary requirements, mobility considerations, specific objects you want to observe…"
+                                style="resize:vertical;"></textarea>
+                        </div>
+
+                        <!-- Emergency Contact -->
+                        <div
+                            style="border:var(--border-subtle);border-radius:14px;padding:20px;margin-bottom:20px;background:rgba(255,255,255,0.02);">
+                            <div
+                                style="font-size:0.8rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--star-dim);margin-bottom:14px;">
+                                Emergency Contact (recommended for overnight camps)</div>
+                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                                <div class="form-group" style="margin-bottom:0;">
+                                    <label class="form-label">Name</label>
+                                    <input type="text" class="form-input" id="emergencyName"
+                                        placeholder="Emergency contact name" />
+                                </div>
+                                <div class="form-group" style="margin-bottom:0;">
+                                    <label class="form-label">Phone</label>
+                                    <input type="tel" class="form-input" id="emergencyPhone"
+                                        placeholder="+91 XXXXX XXXXX" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="display:flex;gap:12px;">
+                            <button class="btn btn-secondary" onclick="goToStep(1)" style="flex:1;">← Back</button>
+                            <button class="btn btn-primary" onclick="goToStep(3)" style="flex:2;">Continue to Add-ons
+                                →</button>
+                        </div>
+                    </div>
+
+                    <!-- ── STEP 3: Add-ons ── -->
+                    <div class="booking-step-content" id="step3">
+                        <h2 class="booking-step-title">Enhance Your Night</h2>
+                        <p class="booking-step-desc">Optional extras to make your experience unforgettable.</p>
+
+                        <div class="addons-grid" id="addonsGrid">
+
+                            <label class="addon-card">
+                                <input type="checkbox" class="addon-checkbox" data-name="Astrophotography Workshop"
+                                    data-price="1500" onchange="updateSummary()" />
+                                <div class="addon-icon">◈</div>
+                                <div class="addon-info">
+                                    <div class="addon-name">Astrophotography Workshop</div>
+                                    <div class="addon-desc">3-hour session: camera settings, polar alignment, image
+                                        stacking. Includes edited RAW files.</div>
+                                </div>
+                                <div class="addon-price">+₹1,500</div>
+                                <div class="addon-check">✦</div>
+                            </label>
+
+                            <label class="addon-card">
+                                <input type="checkbox" class="addon-checkbox" data-name="Laser-Guided Sky Tour"
+                                    data-price="800" onchange="updateSummary()" checked />
+                                <div class="addon-icon">◎</div>
+                                <div class="addon-info">
+                                    <div class="addon-name">Laser-Guided Sky Tour</div>
+                                    <div class="addon-desc">Expert uses a powerful green laser pointer to trace
+                                        constellations, mythologies, and seasonal highlights.</div>
+                                </div>
+                                <div class="addon-price">+₹800</div>
+                                <div class="addon-check">✦</div>
+                            </label>
+
+                            <label class="addon-card">
+                                <input type="checkbox" class="addon-checkbox" data-name="Printed Star Atlas"
+                                    data-price="350" onchange="updateSummary()" />
+                                <div class="addon-icon">▤</div>
+                                <div class="addon-info">
+                                    <div class="addon-name">Printed Star Atlas — Personalised</div>
+                                    <div class="addon-desc">Custom A3 star chart for your observation date, time, and
+                                        location. Signed by your guide.</div>
+                                </div>
+                                <div class="addon-price">+₹350</div>
+                                <div class="addon-check">✦</div>
+                            </label>
+
+                            <label class="addon-card">
+                                <input type="checkbox" class="addon-checkbox" data-name="Astrophysics Lecture"
+                                    data-price="600" onchange="updateSummary()" />
+                                <div class="addon-icon">◆</div>
+                                <div class="addon-info">
+                                    <div class="addon-name">Astrophysics Lecture (1 hr)</div>
+                                    <div class="addon-desc">In-person talk by our astronomer on the night's event —
+                                        cosmology, stellar evolution, or planetary science.</div>
+                                </div>
+                                <div class="addon-price">+₹600</div>
+                                <div class="addon-check">✦</div>
+                            </label>
+
+                            <label class="addon-card">
+                                <input type="checkbox" class="addon-checkbox" data-name="Premium Accommodation"
+                                    data-price="3500" onchange="updateSummary()" />
+                                <div class="addon-icon">△</div>
+                                <div class="addon-info">
+                                    <div class="addon-name">Premium Camp Accommodation</div>
+                                    <div class="addon-desc">Luxury 2-person tent with sleeping bags, thermal liner, and
+                                        solar lantern. Pre-set at the site.</div>
+                                </div>
+                                <div class="addon-price">+₹3,500</div>
+                                <div class="addon-check">✦</div>
+                            </label>
+
+                            <label class="addon-card">
+                                <input type="checkbox" class="addon-checkbox" data-name="Binocular Set" data-price="500"
+                                    onchange="updateSummary()" />
+                                <div class="addon-icon">◔</div>
+                                <div class="addon-info">
+                                    <div class="addon-name">Astronomy Binoculars (10×50)</div>
+                                    <div class="addon-desc">Wide-field 10×50 binoculars for sweeping the Milky Way, open
+                                        clusters, and naked-eye comets.</div>
+                                </div>
+                                <div class="addon-price">+₹500</div>
+                                <div class="addon-check">✦</div>
+                            </label>
+
+                            <label class="addon-card">
+                                <input type="checkbox" class="addon-checkbox" data-name="Red Torch Kit" data-price="250"
+                                    onchange="updateSummary()" />
+                                <div class="addon-icon">●</div>
+                                <div class="addon-info">
+                                    <div class="addon-name">Red Torch Kit (keep it)</div>
+                                    <div class="addon-desc">Astronomy-grade red headlamp to preserve night vision, yours
+                                        to keep as a souvenir.</div>
+                                </div>
+                                <div class="addon-price">+₹250</div>
+                                <div class="addon-check">✦</div>
+                            </label>
+
+                            <label class="addon-card">
+                                <input type="checkbox" class="addon-checkbox" data-name="Video Documentary"
+                                    data-price="2000" onchange="updateSummary()" />
+                                <div class="addon-icon">▶</div>
+                                <div class="addon-info">
+                                    <div class="addon-name">Personal Video Documentary</div>
+                                    <div class="addon-desc">Timelapse of the night sky + your reaction, edited into a
+                                        3-min cinematic video. Delivered digitally.</div>
+                                </div>
+                                <div class="addon-price">+₹2,000</div>
+                                <div class="addon-check">✦</div>
+                            </label>
+
+                        </div>
+
+                        <!-- Cloud-out insurance notice -->
+                        <div class="cloud-out-notice">
+                            <span style="font-size:1.5rem;">☁️</span>
+                            <div>
+                                <div style="font-weight:700;color:var(--aurora-teal);margin-bottom:3px;">Cloud-Out
+                                    Insurance — Always Included Free</div>
+                                <div style="font-size:0.82rem;color:var(--star-dim);">If cloud cover exceeds 50% at your
+                                    site during your session, you receive a <strong>100% full refund</strong> within 24
+                                    hours. No forms, no questions.</div>
+                            </div>
+                        </div>
+
+                        <div style="display:flex;gap:12px;">
+                            <button class="btn btn-secondary" onclick="goToStep(2)" style="flex:1;">← Back</button>
+                            <button class="btn btn-primary" onclick="goToStep(4)" style="flex:2;">Review & Confirm
+                                →</button>
+                        </div>
+                    </div>
+
+                    <!-- ── STEP 4: Confirm ── -->
+                    <div class="booking-step-content" id="step4">
+                        <h2 class="booking-step-title">Review &amp; Confirm</h2>
+                        <p class="booking-step-desc">Please review your booking before payment.</p>
+
+                        <!-- Booking Summary Accordion -->
+                        <div class="confirm-summary" id="confirmSummary">
+                            <!-- Filled by JS -->
+                        </div>
+
+                        <!-- Payment Method -->
+                        <div class="form-group" style="margin-top:24px;">
+                            <label class="form-label">Payment Method</label>
+                            <div class="payment-methods" id="paymentMethods">
+                                <label class="payment-option selected" onclick="selectPayment(this)">
+                                    <input type="radio" name="payment" value="upi" checked />
+                                    <span class="payment-icon">□</span>
+                                    <span class="payment-label">UPI / GPay</span>
+                                </label>
+                                <label class="payment-option" onclick="selectPayment(this)">
+                                    <input type="radio" name="payment" value="card" />
+                                    <span class="payment-icon">▣</span>
+                                    <span class="payment-label">Credit / Debit Card</span>
+                                </label>
+                                <label class="payment-option" onclick="selectPayment(this)">
+                                    <input type="radio" name="payment" value="netbanking" />
+                                    <span class="payment-icon">▤</span>
+                                    <span class="payment-label">Net Banking</span>
+                                </label>
+                                <label class="payment-option" onclick="selectPayment(this)">
+                                    <input type="radio" name="payment" value="emi" />
+                                    <span class="payment-icon">▨</span>
+                                    <span class="payment-label">EMI (0% for 3 mo.)</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- UPI Fields (shown by default) -->
+                        <div id="upiFields" class="payment-fields">
+                            <div class="form-group">
+                                <label class="form-label">UPI ID</label>
+                                <input type="text" class="form-input" id="upiId" placeholder="yourname@upi" />
+                            </div>
+                        </div>
+
+                        <!-- Card Fields (hidden initially) -->
+                        <div id="cardFields" class="payment-fields" style="display:none;">
+                            <div class="form-group">
+                                <label class="form-label">Card Number</label>
+                                <input type="text" class="form-input" id="cardNumber" placeholder="4242 4242 4242 4242"
+                                    maxlength="19" />
+                            </div>
+                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                                <div class="form-group">
+                                    <label class="form-label">Expiry Date</label>
+                                    <input type="text" class="form-input" id="cardExpiry" placeholder="MM / YY"
+                                        maxlength="7" />
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">CVV</label>
+                                    <input type="text" class="form-input" id="cardCvv" placeholder="123"
+                                        maxlength="4" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Name on Card</label>
+                                <input type="text" class="form-input" id="cardName" placeholder="Your full name" />
+                            </div>
+                        </div>
+
+                        <!-- Terms -->
+                        <label class="terms-check">
+                            <input type="checkbox" id="termsCheck" onchange="validateConfirm()" />
+                            <span>I agree to SkyWatch's <a href="#" style="color:var(--aurora-blue);">Terms &
+                                    Conditions</a>, <a href="#" style="color:var(--aurora-blue);">Cancellation
+                                    Policy</a>, and <a href="#" style="color:var(--aurora-blue);">Cloud-Out Insurance
+                                    Policy</a>.</span>
+                        </label>
+
+                        <div style="display:flex;gap:12px;margin-top:24px;">
+                            <button class="btn btn-secondary" onclick="goToStep(3)" style="flex:1;">← Back</button>
+                            <button class="btn btn-gold btn-block" id="confirmBtn" onclick="confirmBooking()"
+                                style="flex:2;opacity:0.5;pointer-events:none;" disabled>
+                                🚀 Confirm &amp; Pay
+                            </button>
+                        </div>
+
+                        <p style="text-align:center;font-size:0.75rem;color:var(--star-faint);margin-top:16px;">
+                            ◎ 256-bit SSL encrypted · Your data is safe with us
+                        </p>
+                    </div>
+
+                    <!-- ── STEP 5: Success ── -->
+                    <div class="booking-step-content" id="step5">
+                        <div class="booking-success">
+                            <div class="success-animation">
+                                <div class="success-ring"></div>
+                                <div class="success-icon">⊙</div>
+                            </div>
+                            <h2 class="success-title">Booking Confirmed!</h2>
+                            <p class="success-subtitle">Your journey to the stars is officially booked.</p>
+
+                            <div class="success-id-box">
+                                <div
+                                    style="font-size:0.72rem;color:var(--star-faint);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;">
+                                    Booking Reference</div>
+                                <div id="bookingRefCode"
+                                    style="font-family:var(--font-mono);font-size:1.4rem;font-weight:700;color:var(--aurora-gold);letter-spacing:0.12em;">
+                                </div>
+                            </div>
+
+                            <div class="success-details" id="successDetails">
+                                <!-- Filled by JS -->
+                            </div>
+
+                            <div
+                                style="display:flex;align-items:center;gap:12px;background:rgba(0,212,200,0.07);border:1px solid rgba(0,212,200,0.2);border-radius:14px;padding:16px 20px;margin-bottom:24px;text-align:left;">
+                                <span style="font-size:1.5rem;">☁️</span>
+                                <div>
+                                    <div style="font-weight:700;color:var(--aurora-teal);font-size:0.9rem;">Cloud-Out
+                                        Insurance Active</div>
+                                    <div style="font-size:0.8rem;color:var(--star-dim);">We'll monitor sky conditions at
+                                        your site 72 hrs before your event. If cloud cover exceeds 50%, your refund is
+                                        automatic.</div>
+                                </div>
+                            </div>
+
+                            <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
+                                <a href="forecast.html" class="btn btn-secondary">◑ Check Sky Forecast</a>
+                                <a href="events.html" class="btn btn-secondary">✦ Browse More Events</a>
+                                <a href="index.html" class="btn btn-primary">◆ Back to Home</a>
+                            </div>
+
+                            <p style="font-size:0.78rem;color:var(--star-faint);margin-top:20px;text-align:center;">A
+                                confirmation email with your sky briefing, location details, and packing list has been
+                                sent to <strong id="successEmail" style="color:var(--aurora-blue);"></strong></p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- ─── RIGHT: Order Summary Panel ─── -->
+                <div class="booking-summary-panel">
+                    <div class="booking-summary-card" id="orderSummary">
+                        <div class="summary-header">
+                            <h3>Order Summary</h3>
+                            <span id="summaryBadge" class="event-type-badge badge-comet">Explorer</span>
+                        </div>
+
+                        <!-- Event Info -->
+                        <div class="summary-event" id="summaryEvent">
+                            <div class="summary-event-icon">🌠</div>
+                            <div>
+                                <div id="summaryEventName" class="summary-event-name">Select an event</div>
+                                <div id="summaryEventDate" class="summary-event-date">—</div>
+                                <div id="summaryEventLocation" class="summary-event-loc">—</div>
+                            </div>
+                        </div>
+
+                        <div class="summary-divider"></div>
+
+                        <!-- Line items -->
+                        <div class="summary-items" id="summaryItems">
+                            <div class="summary-item">
+                                <span class="summary-item-label">Base Package</span>
+                                <span class="summary-item-value" id="summaryBasePrice">₹8,499 × 2</span>
+                            </div>
+                        </div>
+
+                        <div class="summary-divider"></div>
+
+                        <!-- Add-ons -->
+                        <div class="summary-addons" id="summaryAddons">
+                            <div
+                                style="font-size:0.72rem;color:var(--star-faint);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;">
+                                Add-ons</div>
+                            <!-- filled by JS -->
+                        </div>
+
+                        <div class="summary-divider"></div>
+
+                        <!-- Cloud-out badge -->
+                        <div class="summary-insurance">
+                            <span>☁️ Cloud-Out Insurance</span>
+                            <span style="color:var(--aurora-teal);font-weight:700;">FREE</span>
+                        </div>
+
+                        <div class="summary-divider"></div>
+
+                        <!-- Total -->
+                        <div class="summary-total">
+                            <span>Total</span>
+                            <span id="summaryTotal" class="summary-total-value">₹16,998</span>
+                        </div>
+
+                        <div id="summaryPerPerson"
+                            style="text-align:right;font-size:0.72rem;color:var(--star-faint);margin-top:4px;"></div>
+
+                        <!-- Trust badges -->
+                        <div class="trust-badges">
+                            <div class="trust-badge"><span>◎</span> SSL Secure</div>
+                            <div class="trust-badge"><span>◌</span> Cloud-Out Guarantee</div>
+                            <div class="trust-badge"><span>★</span> 4.9/5 Rating</div>
+                            <div class="trust-badge"><span>↩</span> Free Cancellation 48hr</div>
+                        </div>
+
+                        <!-- Forecast teaser inline -->
+                        <div class="summary-forecast" id="summaryForecast">
+                            <div
+                                style="font-size:0.72rem;color:var(--star-faint);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;">
+                                Tonight's Sky Quality</div>
+                            <div style="display:flex;align-items:center;gap:10px;">
+                                <span style="font-size:1.8rem;" id="forecastIcon">✨</span>
+                                <div>
+                                    <div id="forecastLabel"
+                                        style="font-weight:700;font-size:0.9rem;color:var(--aurora-teal);">Loading…
+                                    </div>
+                                    <a href="forecast.html"
+                                        style="font-size:0.72rem;color:var(--star-faint);text-decoration:none;">See full
+                                        forecast →</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <div class="toast-container" id="toastContainer"></div>
+
+    </div><!-- /page-wrapper -->
+
+    <script src="main.js"></script>
+    <script>
+        /* ══════════════════════════════════════
+           booking.js — inline booking page logic
+        ══════════════════════════════════════ */
+
+        let currentStep = 1;
+        let selectedPackage = { name: 'Explorer', price: 8499, pkg: 'explorer' };
+        let bookingTotal = 0;
+
+        // ── Parse URL Params (pre-fill from other pages) ──
+        const params = new URLSearchParams(window.location.search);
+        const preEvent = params.get('event');
+        const prePkg = params.get('pkg');
+        const preDate = params.get('date');
+        const prePeople = params.get('people');
+
+        window.addEventListener('DOMContentLoaded', () => {
+            // Pre-fill event select
+            if (preEvent) {
+                const sel = document.getElementById('eventSelect');
+                for (let opt of sel.options) {
+                    if (opt.value.startsWith(preEvent)) { sel.value = opt.value; break; }
+                }
+                // Fallback: find any partial match
+                if (!sel.value && preEvent) {
+                    for (let opt of sel.options) {
+                        if (opt.text.toLowerCase().includes(preEvent.toLowerCase())) { sel.value = opt.value; break; }
+                    }
+                }
+            }
+
+            // Pre-fill package
+            if (prePkg) {
+                const pkgEl = document.querySelector(`.package-option[data-pkg="${prePkg}"]`);
+                if (pkgEl) selectPackage(pkgEl);
+            }
+
+            // Pre-fill date
+            if (preDate) {
+                document.getElementById('preferredDate').value = preDate;
+            }
+
+            // Pre-fill people
+            if (prePeople) {
+                const ppl = document.getElementById('peopleCount');
+                ppl.value = prePeople;
+            }
+
+            // Set min date to today
+            const today = new Date().toISOString().slice(0, 10);
+            document.getElementById('preferredDate').setAttribute('min', today);
+
+            updateSummary();
+            loadForecastTeaser();
+        });
+
+        // ── Step Navigation ──
+        function goToStep(n) {
+            // Validate step 2 before proceeding to 3
+            if (n === 3) {
+                const fn = document.getElementById('firstName').value.trim();
+                const em = document.getElementById('emailField').value.trim();
+                if (!fn || !em) {
+                    showToast('⚠️', 'Please fill in your name and email to continue.');
+                    return;
+                }
+                if (!em.includes('@')) {
+                    showToast('⚠️', 'Please enter a valid email address.');
+                    return;
+                }
+            }
+
+            // Validate step 1
+            if (n === 2) {
+                const ev = document.getElementById('eventSelect').value;
+                const dt = document.getElementById('preferredDate').value;
+                if (!ev) { showToast('⚠️', 'Please select a celestial event.'); return; }
+                if (!dt) { showToast('⚠️', 'Please choose a preferred date.'); return; }
+            }
+
+            currentStep = n;
+
+            // Update step indicators
+            document.querySelectorAll('.booking-step').forEach(s => {
+                const stepNum = parseInt(s.dataset.step);
+                s.classList.remove('active', 'completed');
+                if (stepNum === n) s.classList.add('active');
+                if (stepNum < n) s.classList.add('completed');
+            });
+
+            // Show/hide step content
+            document.querySelectorAll('.booking-step-content').forEach(c => c.classList.remove('active'));
+            const target = document.getElementById(`step${n}`);
+            if (target) {
+                target.classList.add('active');
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+
+            if (n === 4) buildConfirmSummary();
+            updateSummary();
+        }
+
+        // ── Package Selection ──
+        function selectPackage(el) {
+            document.querySelectorAll('.package-option').forEach(p => p.classList.remove('selected'));
+            el.classList.add('selected');
+            selectedPackage = {
+                name: el.dataset.pkg.charAt(0).toUpperCase() + el.dataset.pkg.slice(1),
+                price: parseInt(el.dataset.price),
+                pkg: el.dataset.pkg
+            };
+            document.getElementById('summaryBadge').textContent = selectedPackage.name;
+            updateSummary();
+        }
+
+        // ── Payment Method Toggle ──
+        function selectPayment(el) {
+            document.querySelectorAll('.payment-option').forEach(p => p.classList.remove('selected'));
+            el.classList.add('selected');
+
+            const val = el.querySelector('input').value;
+            document.getElementById('upiFields').style.display = val === 'upi' ? 'block' : 'none';
+            document.getElementById('cardFields').style.display = val === 'card' ? 'block' : 'none';
+
+            // Format card number
+            const cardNumEl = document.getElementById('cardNumber');
+            if (cardNumEl) {
+                cardNumEl.addEventListener('input', (e) => {
+                    let val = e.target.value.replace(/\D/g, '').slice(0, 16);
+                    e.target.value = val.replace(/(.{4})/g, '$1 ').trim();
+                });
+            }
+        }
+
+        // ── Validate Confirm Button ──
+        function validateConfirm() {
+            const checked = document.getElementById('termsCheck').checked;
+            const btn = document.getElementById('confirmBtn');
+            if (checked) {
+                btn.style.opacity = '1'; btn.style.pointerEvents = 'auto'; btn.disabled = false;
+            } else {
+                btn.style.opacity = '0.5'; btn.style.pointerEvents = 'none'; btn.disabled = true;
+            }
+        }
+
+        // ── Update Order Summary (right panel) ──
+        function updateSummary() {
+            const evVal = document.getElementById('eventSelect').value;
+            const people = parseInt(document.getElementById('peopleCount').value) || 2;
+            const telesVal = document.getElementById('telescopeSelect').value;
+            const teleParts = telesVal.split('|');
+            const telePrice = parseInt(teleParts[0]) || 0;
+            const teleName = teleParts[1] || '';
+
+            // Event info
+            if (evVal) {
+                const parts = evVal.split('|');
+                document.getElementById('summaryEventName').textContent = parts[0] || '—';
+                document.getElementById('summaryEventDate').textContent = parts[2] || '—';
+                document.getElementById('summaryEventLocation').textContent = parts[3] || '—';
+            } else {
+                document.getElementById('summaryEventName').textContent = 'Select an event';
+                document.getElementById('summaryEventDate').textContent = '—';
+                document.getElementById('summaryEventLocation').textContent = '—';
+            }
+
+            // Base price
+            const basePerPerson = selectedPackage.price;
+            const baseTotal = basePerPerson * people;
+
+            document.getElementById('summaryBasePrice').textContent =
+                `₹${basePerPerson.toLocaleString('en-IN')} × ${people}`;
+
+            // Add-ons
+            const addons = Array.from(document.querySelectorAll('.addon-checkbox:checked'));
+            let addonsTotal = 0;
+            const addonsContainer = document.getElementById('summaryAddons');
+            addonsContainer.innerHTML = '<div style="font-size:0.72rem;color:var(--star-faint);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;">Add-ons</div>';
+
+            if (addons.length === 0 && telePrice === 0) {
+                addonsContainer.innerHTML += '<div style="font-size:0.82rem;color:var(--star-faint);">None selected</div>';
+            }
+
+            addons.forEach(cb => {
+                const price = parseInt(cb.dataset.price) || 0;
+                addonsTotal += price;
+                addonsContainer.innerHTML += `
+      <div class="summary-item" style="margin-bottom:6px;">
+        <span class="summary-item-label" style="font-size:0.8rem;">${cb.dataset.name}</span>
+        <span class="summary-item-value">+₹${price.toLocaleString('en-IN')}</span>
+      </div>`;
+            });
+
+            if (telePrice > 0) {
+                addonsTotal += telePrice;
+                addonsContainer.innerHTML += `
+      <div class="summary-item" style="margin-bottom:6px;">
+        <span class="summary-item-label" style="font-size:0.8rem;">🔭 ${teleName}</span>
+        <span class="summary-item-value">+₹${telePrice.toLocaleString('en-IN')}</span>
+      </div>`;
+            }
+
+            // Totals
+            bookingTotal = baseTotal + addonsTotal;
+            document.getElementById('summaryTotal').textContent = `₹${bookingTotal.toLocaleString('en-IN')}`;
+            document.getElementById('summaryPerPerson').textContent =
+                people > 1 ? `₹${Math.round(bookingTotal / people).toLocaleString('en-IN')} per person` : '';
+        }
+
+        // ── Build Confirm Summary ──
+        function buildConfirmSummary() {
+            const fn = document.getElementById('firstName').value.trim();
+            const ln = document.getElementById('lastName').value.trim();
+            const em = document.getElementById('emailField').value.trim();
+            const ph = document.getElementById('phoneField').value.trim();
+            const evVal = document.getElementById('eventSelect').value;
+            const dt = document.getElementById('preferredDate').value;
+            const ppl = document.getElementById('peopleCount').value;
+            const evParts = (evVal || '').split('|');
+
+            const addons = Array.from(document.querySelectorAll('.addon-checkbox:checked'))
+                .map(cb => cb.dataset.name).join(', ') || 'None';
+
+            document.getElementById('confirmSummary').innerHTML = `
+    <div class="confirm-row">
+      <div class="confirm-row-label">👤 Guest Name</div>
+      <div class="confirm-row-value">${fn} ${ln}</div>
+    </div>
+    <div class="confirm-row">
+      <div class="confirm-row-label">📧 Email</div>
+      <div class="confirm-row-value">${em}</div>
+    </div>
+    <div class="confirm-row">
+      <div class="confirm-row-label">📅 Event</div>
+      <div class="confirm-row-value">${evParts[0] || '—'}</div>
+    </div>
+    <div class="confirm-row">
+      <div class="confirm-row-label">📅 Date</div>
+      <div class="confirm-row-value">${dt || '—'}</div>
+    </div>
+    <div class="confirm-row">
+      <div class="confirm-row-label">📍 Location</div>
+      <div class="confirm-row-value">${evParts[3] || '—'}</div>
+    </div>
+    <div class="confirm-row">
+      <div class="confirm-row-label">🚀 Package</div>
+      <div class="confirm-row-value">${selectedPackage.name}</div>
+    </div>
+    <div class="confirm-row">
+      <div class="confirm-row-label">👥 Guests</div>
+      <div class="confirm-row-value">${ppl} ${parseInt(ppl) === 1 ? 'person' : 'people'}</div>
+    </div>
+    <div class="confirm-row">
+      <div class="confirm-row-label">✦ Add-ons</div>
+      <div class="confirm-row-value">${addons}</div>
+    </div>
+    <div class="confirm-row" style="border-top:var(--border-subtle);padding-top:14px;margin-top:4px;">
+      <div class="confirm-row-label" style="font-weight:700;color:var(--star-white);">💰 Total</div>
+      <div class="confirm-row-value" style="font-family:var(--font-display);font-size:1.4rem;font-weight:800;color:var(--aurora-gold);">₹${bookingTotal.toLocaleString('en-IN')}</div>
+    </div>
+  `;
+        }
+
+        // ── Confirm & Pay ──
+        function confirmBooking() {
+            const btn = document.getElementById('confirmBtn');
+            btn.textContent = '⏳ Processing…';
+            btn.disabled = true;
+            btn.style.opacity = '0.7';
+
+            // Simulate payment processing
+            setTimeout(() => {
+                const refCode = 'SKY-' + Math.random().toString(36).slice(2, 8).toUpperCase();
+                const em = document.getElementById('emailField').value;
+                const fn = document.getElementById('firstName').value;
+                const evVal = document.getElementById('eventSelect').value;
+                const evParts = (evVal || '').split('|');
+                const dt = document.getElementById('preferredDate').value;
+                const ppl = document.getElementById('peopleCount').value;
+
+                document.getElementById('bookingRefCode').textContent = refCode;
+                document.getElementById('successEmail').textContent = em;
+
+                document.getElementById('successDetails').innerHTML = `
+      <div class="success-detail-item">📅 <strong>${evParts[0] || 'Dark-Sky Tour'}</strong></div>
+      <div class="success-detail-item">🗓️ ${dt || 'Date to be confirmed'}</div>
+      <div class="success-detail-item">📍 ${evParts[3] || 'Location TBC'}</div>
+      <div class="success-detail-item">👥 ${ppl} ${parseInt(ppl) === 1 ? 'Guest' : 'Guests'} · ${selectedPackage.name} Package</div>
+      <div class="success-detail-item" style="color:var(--aurora-gold);">💰 Paid: ₹${bookingTotal.toLocaleString('en-IN')}</div>
+    `;
+
+                // Mark all steps completed
+                document.querySelectorAll('.booking-step').forEach(s => {
+                    s.classList.remove('active');
+                    s.classList.add('completed');
+                });
+
+                goToStep(5);
+                showToast('🎉', `Booking confirmed! Ref: ${refCode}`);
+            }, 2200);
+        }
+
+        // ── Forecast Teaser ──
+        async function loadForecastTeaser() {
+            const icons = ['✨', '✨', '🌙', '⛅', '☁️'];
+            const labels = ['Excellent — Perfect tonight!', 'Excellent sky conditions', 'Good visibility', 'Partly cloudy', 'Cloudy'];
+            // Quick simulated result for summary panel
+            const idx = Math.floor(Math.random() * 3); // bias towards clear
+            document.getElementById('forecastIcon').textContent = icons[idx];
+            document.getElementById('forecastLabel').textContent = labels[idx];
+        }
+
+    </script>
+</body>
+
+</html>

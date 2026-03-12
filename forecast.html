@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sky Forecast — Cloud Cover & Moon Phase | SkyWatch</title>
+    <meta name="description"
+        content="Real-time cloud cover, moon phase, and atmospheric forecast for India's premier dark-sky astronomy locations. Plan your perfect observation night." />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔭</text></svg>" />
+</head>
+
+<body>
+
+    <canvas id="starfield"></canvas>
+
+    <div class="page-wrapper">
+
+        <!-- ═══════════ NAVBAR ═══════════ -->
+        <nav class="navbar" id="mainNav">
+            <a href="index.html" class="nav-logo">
+                <div class="nav-logo-icon">🔭</div>
+                <span class="nav-logo-text">SkyWatch</span>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="forecast.html" class="active">Forecast</a></li>
+                <li><a href="index.html#tours">Tours</a></li>
+                <li><a href="index.html#equipment">Equipment</a></li>
+                <li><a href="index.html#pricing">Pricing</a></li>
+                <li><a href="index.html#booking" class="nav-cta btn">Book Now</a></li>
+            </ul>
+            <div class="nav-hamburger" id="hamburger" onclick="toggleMenu()">
+                <span></span><span></span><span></span>
+            </div>
+        </nav>
+
+        <!-- ═══════════ FORECAST HERO ═══════════ -->
+        <section class="forecast-hero">
+            <div class="container">
+                <div class="section-tag" style="justify-content:center;">✦ Real-Time Sky Intelligence</div>
+                <h1 class="section-title" style="font-size: clamp(2.4rem,6vw,4.5rem);">
+                    <span
+                        style="background:linear-gradient(135deg,#e8edf8,#4a6cf7,#00d4c8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Sky
+                        Forecast</span>
+                </h1>
+                <p class="section-subtitle" style="margin-bottom:8px;">Live cloud cover, moon phase &amp; atmospheric
+                    data for every SkyWatch observation site. Updated every 15 minutes.</p>
+
+                <!-- Location Selector -->
+                <div class="location-selector" id="locationSelector">
+                    <button class="location-chip active" onclick="selectLocation('hanle', this)" id="chip-hanle">
+                        🏔️ Hanle, Ladakh
+                    </button>
+                    <button class="location-chip" onclick="selectLocation('spiti', this)" id="chip-spiti">
+                        ⛰️ Spiti Valley
+                    </button>
+                    <button class="location-chip" onclick="selectLocation('rann', this)" id="chip-rann">
+                        🏜️ Rann of Kutch
+                    </button>
+                    <button class="location-chip" onclick="selectLocation('nainital', this)" id="chip-nainital">
+                        🌲 Nainital
+                    </button>
+                    <button class="location-chip" onclick="selectLocation('hampi', this)" id="chip-hampi">
+                        🏛️ Hampi
+                    </button>
+                    <button class="location-chip" onclick="selectLocation('sambhar', this)" id="chip-sambhar">
+                        🌊 Sambhar Lake
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════ STATUS BAR ═══════════ -->
+        <section style="padding: 0 clamp(20px,4vw,60px) 32px;">
+            <div class="container">
+                <div class="status-bar" id="statusBar">
+                    <div class="status-item">
+                        <span class="status-dot"></span>
+                        <span id="statusLocation">Hanle Dark Sky Reserve, Ladakh</span>
+                    </div>
+                    <div class="status-item">🕐 <span id="statusTime">--:-- IST</span></div>
+                    <div class="status-item">📍 <span id="statusCoords">32.7°N, 78.9°E</span></div>
+                    <div class="status-item">⬆️ <span id="statusElevation">4,270m elevation</span></div>
+                    <div class="status-item" id="statusBortle">🌑 Bortle Class 1</div>
+                    <div class="status-item" style="margin-left:auto;">
+                        <span id="lastUpdated" style="color:var(--star-faint);font-size:0.75rem;">Last updated just
+                            now</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════ MAIN FORECAST DASHBOARD ═══════════ -->
+        <section class="section" style="padding-top: 0;">
+            <div class="container">
+
+                <!-- Top Row: Current Conditions + Moon Card -->
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:28px;"
+                    class="forecast-top-row">
+
+                    <!-- Current Conditions -->
+                    <div class="forecast-panel" id="currentConditions">
+                        <div
+                            style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px;">
+                            <h2 style="font-family:var(--font-display);font-size:1.3rem;font-weight:700;">Tonight's
+                                Conditions</h2>
+                            <span id="observingRating" class="event-type-badge badge-comet">Fetching...</span>
+                        </div>
+
+                        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;" id="conditionsGrid">
+                            <!-- Filled by JS -->
+                        </div>
+
+                        <!-- Cloud Cover Bar -->
+                        <div style="margin-top:24px;">
+                            <div
+                                style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                                <span style="font-size:0.82rem;color:var(--star-dim);font-weight:600;">☁️ Cloud
+                                    Cover</span>
+                                <span id="cloudPct"
+                                    style="font-family:var(--font-mono);font-size:0.9rem;color:var(--aurora-teal);font-weight:700;">--</span>
+                            </div>
+                            <div
+                                style="height:10px;background:rgba(255,255,255,0.07);border-radius:5px;overflow:hidden;">
+                                <div id="cloudBar"
+                                    style="height:100%;width:0%;background:var(--gradient-aurora);border-radius:5px;transition:width 1.5s cubic-bezier(0.4,0,0.2,1);">
+                                </div>
+                            </div>
+                            <div style="display:flex;justify-content:space-between;margin-top:6px;">
+                                <span style="font-size:0.7rem;color:var(--aurora-teal);">Clear</span>
+                                <span style="font-size:0.7rem;color:var(--aurora-pink);">Overcast</span>
+                            </div>
+                        </div>
+
+                        <!-- Atmospheric Quality Gauges -->
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px;">
+                            <div style="background:rgba(255,255,255,0.03);border-radius:12px;padding:14px;">
+                                <div
+                                    style="font-size:0.72rem;color:var(--star-faint);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">
+                                    Transparency</div>
+                                <div id="transparencyBar"
+                                    style="height:6px;background:rgba(255,255,255,0.07);border-radius:3px;overflow:hidden;margin-bottom:6px;">
+                                    <div id="transparencyFill"
+                                        style="height:100%;width:0%;background:var(--aurora-teal);border-radius:3px;transition:width 1.5s ease;">
+                                    </div>
+                                </div>
+                                <div id="transparencyLabel"
+                                    style="font-family:var(--font-mono);font-size:0.85rem;color:var(--aurora-teal);font-weight:700;">
+                                    --</div>
+                            </div>
+                            <div style="background:rgba(255,255,255,0.03);border-radius:12px;padding:14px;">
+                                <div
+                                    style="font-size:0.72rem;color:var(--star-faint);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">
+                                    Seeing (Antoniadi)</div>
+                                <div id="seeingBar"
+                                    style="height:6px;background:rgba(255,255,255,0.07);border-radius:3px;overflow:hidden;margin-bottom:6px;">
+                                    <div id="seeingFill"
+                                        style="height:100%;width:0%;background:var(--aurora-gold);border-radius:3px;transition:width 1.5s ease;">
+                                    </div>
+                                </div>
+                                <div id="seeingLabel"
+                                    style="font-family:var(--font-mono);font-size:0.85rem;color:var(--aurora-gold);font-weight:700;">
+                                    --</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Moon Phase Card -->
+                    <div class="moon-card" id="moonCard">
+                        <div class="moon-visual" id="moonVisual"></div>
+                        <div class="moon-info" style="flex:1;">
+                            <p
+                                style="font-size:0.75rem;color:var(--star-faint);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;">
+                                Current Moon Phase</p>
+                            <h3 id="moonPhaseName">Waxing Crescent</h3>
+                            <p id="moonPhaseDesc"
+                                style="font-size:0.85rem;color:var(--star-dim);line-height:1.7;margin-bottom:12px;">Good
+                                conditions for deep-sky observation.</p>
+                            <div class="moon-data-grid">
+                                <div class="moon-data-item">
+                                    <div class="moon-data-label">Illumination</div>
+                                    <div class="moon-data-value" id="moonIllum">--</div>
+                                </div>
+                                <div class="moon-data-item">
+                                    <div class="moon-data-label">Rises At</div>
+                                    <div class="moon-data-value" id="moonRise">--</div>
+                                </div>
+                                <div class="moon-data-item">
+                                    <div class="moon-data-label">Sets At</div>
+                                    <div class="moon-data-value" id="moonSet">--</div>
+                                </div>
+                                <div class="moon-data-item">
+                                    <div class="moon-data-label">Next New Moon</div>
+                                    <div class="moon-data-value" id="nextNewMoon">--</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- 7-Day Forecast Panel -->
+                <div class="forecast-panel" id="sevenDayPanel">
+                    <div
+                        style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:4px;">
+                        <h2 style="font-family:var(--font-display);font-size:1.3rem;font-weight:700;">7-Day Observation
+                            Forecast</h2>
+                        <div style="display:flex;align-items:center;gap:16px;font-size:0.78rem;color:var(--star-dim);">
+                            <span>🌙 = Excellent</span>
+                            <span>⛅ = Fair</span>
+                            <span>☁️ = Poor</span>
+                        </div>
+                    </div>
+                    <div class="forecast-grid" id="forecastGrid">
+                        <!-- Filled by JS -->
+                    </div>
+                </div>
+
+                <!-- Detailed Day Panel (shows on click) -->
+                <div id="detailPanel" style="display:none;margin-top:24px;">
+                    <div class="forecast-panel">
+                        <h3 id="detailTitle"
+                            style="font-family:var(--font-display);font-size:1.2rem;font-weight:700;margin-bottom:20px;">
+                        </h3>
+                        <div id="detailContent"
+                            style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ═══════════ LOCATION MAP SECTION ═══════════ -->
+        <section class="section"
+            style="background:linear-gradient(180deg,transparent,rgba(74,108,247,0.04) 50%,transparent);">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-tag">✦ All Observation Sites</div>
+                    <h2 class="section-title">Site Conditions<br>At a Glance</h2>
+                    <p class="section-subtitle">Compare current sky quality across all SkyWatch dark-sky locations.</p>
+                </div>
+
+                <div id="allSitesGrid"
+                    style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;">
+                    <!-- Filled by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════ HOW IT WORKS ═══════════ -->
+        <section class="section" style="padding-bottom: 80px;">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-tag">✦ Forecast Methodology</div>
+                    <h2 class="section-title">How We Predict<br>Your Perfect Night</h2>
+                </div>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px;">
+                    <div class="glass-card reveal" style="text-align:center;">
+                        <div style="font-size:2.5rem;margin-bottom:16px;">🛰️</div>
+                        <h3
+                            style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;margin-bottom:8px;color:var(--aurora-blue);">
+                            Satellite Cloud Data</h3>
+                        <p style="font-size:0.85rem;color:var(--star-dim);line-height:1.7;">INSAT-3D &amp; Meteosat IR
+                            imagery analysed every 15 min for high-altitude cloud detection.</p>
+                    </div>
+                    <div class="glass-card reveal reveal-delay-1" style="text-align:center;">
+                        <div style="font-size:2.5rem;margin-bottom:16px;">🌬️</div>
+                        <h3
+                            style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;margin-bottom:8px;color:var(--aurora-teal);">
+                            Atmospheric Modelling</h3>
+                        <p style="font-size:0.85rem;color:var(--star-dim);line-height:1.7;">GFS &amp; ECMWF NWP models
+                            provide seeing &amp; transparency forecasts at each site's pressure level.</p>
+                    </div>
+                    <div class="glass-card reveal reveal-delay-2" style="text-align:center;">
+                        <div style="font-size:2.5rem;margin-bottom:16px;">🌙</div>
+                        <h3
+                            style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;margin-bottom:8px;color:var(--aurora-gold);">
+                            Lunar Ephemeris</h3>
+                        <p style="font-size:0.85rem;color:var(--star-dim);line-height:1.7;">Precise moon phase, rise/set
+                            times and illumination computed from JPL DE430 ephemeris data.</p>
+                    </div>
+                    <div class="glass-card reveal reveal-delay-3" style="text-align:center;">
+                        <div style="font-size:2.5rem;margin-bottom:16px;">☁️</div>
+                        <h3
+                            style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;margin-bottom:8px;color:var(--aurora-pink);">
+                            Cloud-Out Insurance Trigger</h3>
+                        <p style="font-size:0.85rem;color:var(--star-dim);line-height:1.7;">If cloud cover exceeds 50%
+                            for &gt;2 hours during your session, your refund is automatically initiated.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="toast-container" id="toastContainer"></div>
+
+        <!-- ═══════════ FOOTER ═══════════ -->
+        <footer class="footer">
+            <div class="footer-grid">
+                <div>
+                    <a href="index.html" class="nav-logo" style="margin-bottom:16px;display:inline-flex;">
+                        <div class="nav-logo-icon">🔭</div>
+                        <span class="nav-logo-text">SkyWatch</span>
+                    </a>
+                    <p class="footer-brand-desc">India's premier dark-sky astronomy tour operator.</p>
+                    <div class="footer-social">
+                        <a href="#">🐦</a><a href="#">📸</a><a href="#">▶️</a><a href="#">💼</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Experiences</h4>
+                    <ul>
+                        <li><a href="events.html">Event Calendar</a></li>
+                        <li><a href="index.html#tours">Dark-Sky Tours</a></li>
+                        <li><a href="index.html#equipment">Telescope Rentals</a></li>
+                        <li><a href="forecast.html">Sky Forecast</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About SkyWatch</a></li>
+                        <li><a href="#">Our Astronomers</a></li>
+                        <li><a href="#">Locations</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Cloud-Out Policy</a></li>
+                        <li><a href="#">Booking FAQ</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Safety Guidelines</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 SkyWatch Astronomy Tours. All rights reserved.</p>
+                <p>Built for the stars. 🌌</p>
+            </div>
+        </footer>
+
+    </div>
+
+    <script src="main.js"></script>
+    <script src="forecast.js"></script>
+</body>
+
+</html>

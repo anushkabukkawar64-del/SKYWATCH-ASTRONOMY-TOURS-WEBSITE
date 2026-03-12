@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SkyWatch — Astronomy Dark-Sky Tours & Telescope Rentals</title>
+  <meta name="description"
+    content="Book premium dark-sky astronomy tours and telescope rentals during celestial events. Eclipse tours, meteor shower nights, and more. Cloud-out insurance included." />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔭</text></svg>" />
+</head>
+
+<body>
+
+  <!-- Animated Starfield Canvas -->
+  <canvas id="starfield"></canvas>
+
+  <div class="page-wrapper">
+
+    <!-- ═══════════ NAVBAR ═══════════ -->
+    <nav class="navbar" id="mainNav">
+      <a href="index.html" class="nav-logo">
+        <div class="nav-logo-icon">⊙</div>
+        <span class="nav-logo-text">SkyWatch</span>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="forecast.html">Forecast</a></li>
+        <li><a href="index.html#tours">Tours</a></li>
+        <li><a href="index.html#equipment">Equipment</a></li>
+        <li><a href="index.html#pricing">Pricing</a></li>
+        <li><a href="booking.html" class="nav-cta btn">Book Now</a></li>
+      </ul>
+      <div class="nav-hamburger" id="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </div>
+    </nav>
+
+    <!-- ═══════════ HERO ═══════════ -->
+    <section class="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-bg-image"></div>
+      <div class="hero-nebula hero-nebula-1"></div>
+      <div class="hero-nebula hero-nebula-2"></div>
+
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="hero-badge-dot"></span>
+          Next Event: Perseid Meteor Shower — Aug 11–13
+        </div>
+
+        <h1 class="hero-title">
+          <span class="hero-title-grad">Journey Into</span><br>
+          The <span class="accent">Infinite</span><br>
+          <span class="hero-title-grad">Dark Sky</span>
+        </h1>
+
+        <p class="hero-desc">
+          Premium dark-sky astronomy tours at Bortle Class 1–3 locations.
+          Telescope rentals, expert guides, and <em>cloud-out insurance</em>
+          for the world's most breathtaking celestial events.
+        </p>
+
+        <div class="hero-actions">
+          <a href="events.html" class="btn btn-primary">
+            ✦ Explore Events
+          </a>
+          <a href="forecast.html" class="btn btn-secondary">
+            ◑ Check Forecast
+          </a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <span class="hero-stat-value">47+</span>
+            <span class="hero-stat-label">Dark-Sky Sites</span>
+          </div>
+          <div class="hero-stat">
+            <span class="hero-stat-value">120+</span>
+            <span class="hero-stat-label">Annual Events</span>
+          </div>
+          <div class="hero-stat">
+            <span class="hero-stat-value">12K+</span>
+            <span class="hero-stat-label">Stargazers Served</span>
+          </div>
+          <div class="hero-stat">
+            <span class="hero-stat-value">100%</span>
+            <span class="hero-stat-label">Cloud-Out Guarantee</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ UPCOMING EVENTS STRIP ═══════════ -->
+    <section class="section" style="padding-top: 40px; padding-bottom: 40px;">
+      <div class="container">
+        <div
+          style="background: rgba(74,108,247,0.07); border: 1px solid rgba(74,108,247,0.2); border-radius: 16px; padding: 20px 28px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap; overflow: hidden;">
+          <span
+            style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--aurora-teal); letter-spacing: 0.1em; flex-shrink:0;">LIVE
+            EVENTS</span>
+          <div style="flex: 1; display: flex; gap: 32px; overflow-x: auto; scrollbar-width: none;">
+            <div class="strip-event">◉ <strong>Apr 8</strong> — Total Solar Eclipse</div>
+            <div class="strip-event">✦ <strong>May 5</strong> — Eta Aquariid Meteor Shower Peak</div>
+            <div class="strip-event">● <strong>Jun 22</strong> — Supermoon Rise</div>
+            <div class="strip-event">✦ <strong>Aug 11</strong> — Perseid Meteor Shower</div>
+            <div class="strip-event">✶ <strong>Oct 2</strong> — Annular Solar Eclipse</div>
+          </div>
+          <a href="events.html" class="btn btn-sm btn-secondary">View All →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ FEATURED EVENTS ═══════════ -->
+    <section class="section" id="featured-events">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">✦ Upcoming Celestial Events</div>
+          <h2 class="section-title">Don't Miss These<br>Spectacular Skies</h2>
+          <p class="section-subtitle">Handpicked events chosen for optimal viewing conditions, Bortle ratings, and
+            astronomical significance.</p>
+        </div>
+
+        <div class="events-grid">
+
+          <!-- Eclipse Card -->
+          <div class="event-card reveal">
+            <div class="event-card-header">
+              <span class="event-type-badge badge-eclipse">◉ Eclipse</span>
+              <div class="event-date-box">
+                <div class="event-date-day">08</div>
+                <div class="event-date-month">Apr 2026</div>
+              </div>
+            </div>
+            <div class="event-card-body">
+              <h3 class="event-name">Total Solar Eclipse — Path of Totality</h3>
+              <p class="event-desc">Experience darkness at noon as the Moon perfectly covers the Sun. Our prime location
+                lies precisely on the center line of totality for maximum duration.</p>
+              <div class="event-meta">
+                <span class="event-meta-item">▸ Rajasthan Desert, India</span>
+                <span class="event-meta-item">◷ 4m 28s Totality</span>
+                <span class="event-meta-item">◎ Bortle Class 2</span>
+              </div>
+            </div>
+            <div class="event-card-footer">
+              <div class="event-price">
+                <span class="event-price-amount">₹14,999</span>
+                <span class="event-price-note">per person / peak pricing</span>
+              </div>
+              <a href="booking.html?event=Total+Solar+Eclipse&pkg=explorer&date=2026-04-08"
+                class="btn btn-sm btn-primary">Book Now</a>
+            </div>
+          </div>
+
+          <!-- Meteor Shower Card -->
+          <div class="event-card reveal reveal-delay-1">
+            <div class="event-card-header">
+              <span class="event-type-badge badge-meteor">✦ Meteor Shower</span>
+              <div class="event-date-box">
+                <div class="event-date-day">11</div>
+                <div class="event-date-month">Aug 2026</div>
+              </div>
+            </div>
+            <div class="event-card-body">
+              <h3 class="event-name">Perseid Meteor Shower — Peak Night</h3>
+              <p class="event-desc">Over 100 meteors per hour streak across the sky in one of summer's greatest
+                celestial fireworks. Camp under a dark canopy with hot beverages and expert commentary.</p>
+              <div class="event-meta">
+                <span class="event-meta-item">▸ Spiti Valley, Himachal Pradesh</span>
+                <span class="event-meta-item">✦ ~120 meteors/hr</span>
+                <span class="event-meta-item">◎ Bortle Class 1</span>
+              </div>
+            </div>
+            <div class="event-card-footer">
+              <div class="event-price">
+                <span class="event-price-amount">₹8,499</span>
+                <span class="event-price-note">per person / 2-night camp</span>
+              </div>
+              <a href="booking.html?event=Perseid+Meteor+Shower&pkg=explorer&date=2026-08-11"
+                class="btn btn-sm btn-primary">Book Now</a>
+            </div>
+          </div>
+
+          <!-- Supermoon Card -->
+          <div class="event-card reveal reveal-delay-2">
+            <div class="event-card-header">
+              <span class="event-type-badge badge-lunar">● Lunar</span>
+              <div class="event-date-box">
+                <div class="event-date-day">22</div>
+                <div class="event-date-month">Jun 2026</div>
+              </div>
+            </div>
+            <div class="event-card-body">
+              <h3 class="event-name">Strawberry Supermoon — Perigee Full Moon</h3>
+              <p class="event-desc">The Moon at its closest point to Earth appears 14% larger and 30% brighter.
+                Photograph the moonrise over ancient ruins with our astrophotography workshops.</p>
+              <div class="event-meta">
+                <span class="event-meta-item">▸ Hampi, Karnataka</span>
+                <span class="event-meta-item">● 14% Larger</span>
+                <span class="event-meta-item">◈ Photo Workshop</span>
+              </div>
+            </div>
+            <div class="event-card-footer">
+              <div class="event-price">
+                <span class="event-price-amount">₹6,299</span>
+                <span class="event-price-note">per person / evening tour</span>
+              </div>
+              <a href="booking.html?event=Strawberry+Supermoon&pkg=stargazer&date=2026-06-22"
+                class="btn btn-sm btn-primary">Book Now</a>
+            </div>
+          </div>
+
+        </div>
+
+        <div style="text-align: center; margin-top: 40px;">
+          <a href="events.html" class="btn btn-secondary">View Full Events Calendar →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ TOURS SECTION ═══════════ -->
+    <section class="section" id="tours"
+      style="background: linear-gradient(180deg, transparent, rgba(74,108,247,0.04) 50%, transparent);">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">✦ Dark-Sky Destinations</div>
+          <h2 class="section-title">Premier Observation<br>Locations</h2>
+          <p class="section-subtitle">Each site is rated on the Bortle Dark-Sky Scale and carefully selected for minimal
+            light pollution, accessibility, and celestial alignment.</p>
+        </div>
+
+        <div class="tour-grid">
+          <div class="glass-card reveal" style="padding: 0; overflow: hidden;">
+            <div class="tour-card-img" style="background: linear-gradient(135deg, #0d1a3e, #1a0d2e);">
+              <span style="z-index:1; position:relative;">▲</span>
+            </div>
+            <div class="tour-card-body">
+              <div style="display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;">
+                <span class="event-type-badge badge-eclipse">Bortle 1</span>
+                <span class="event-type-badge badge-comet">4,270m Elevation</span>
+              </div>
+              <h3 class="tour-card-title">Hanle Dark Sky Observatory</h3>
+              <p style="font-size: 0.875rem; color: var(--star-dim); margin-bottom: 16px; line-height: 1.7;">Ladakh's
+                crown jewel — the world's highest observatory site with SQM 22.4. Exceptional transparency and seeing
+                conditions year-round.</p>
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--aurora-teal);">SQM: 22.4 ·
+                  300+ clear nights/yr</span>
+                <a href="events.html" class="btn btn-sm btn-secondary">Explore</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-card reveal reveal-delay-1" style="padding: 0; overflow: hidden;">
+            <div class="tour-card-img" style="background: linear-gradient(135deg, #1a1a0d, #2d1a0d);">
+              <span style="z-index:1; position:relative;">▤</span>
+            </div>
+            <div class="tour-card-body">
+              <div style="display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;">
+                <span class="event-type-badge badge-lunar">Bortle 2</span>
+                <span class="event-type-badge badge-meteor">Desert Climate</span>
+              </div>
+              <h3 class="tour-card-title">Rann of Kutch Star Camp</h3>
+              <p style="font-size: 0.875rem; color: var(--star-dim); margin-bottom: 16px; line-height: 1.7;">Vast salt
+                flats create an unobstructed 360° horizon. The white salt reflects starlight, creating an otherworldly
+                observation environment.</p>
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--aurora-teal);">SQM: 21.8 ·
+                  280 clear nights/yr</span>
+                <a href="events.html" class="btn btn-sm btn-secondary">Explore</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-card reveal reveal-delay-2" style="padding: 0; overflow: hidden;">
+            <div class="tour-card-img" style="background: linear-gradient(135deg, #0d1a1a, #0d2a1a);">
+              <span style="z-index:1; position:relative;">△</span>
+            </div>
+            <div class="tour-card-body">
+              <div style="display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;">
+                <span class="event-type-badge badge-planet">Bortle 1</span>
+                <span class="event-type-badge badge-comet">3,800m Elevation</span>
+              </div>
+              <h3 class="tour-card-title">Spiti Valley Night Camp</h3>
+              <p style="font-size: 0.875rem; color: var(--star-dim); margin-bottom: 16px; line-height: 1.7;">Remote
+                Himalayan valley with crystal-clear air above monsoon clouds. Winter skies reveal the Milky Way's core
+                in breathtaking clarity.</p>
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--aurora-teal);">SQM: 22.1 ·
+                  270 clear nights/yr</span>
+                <a href="events.html" class="btn btn-sm btn-secondary">Explore</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bortle Scale Explainer -->
+        <div class="glass-card reveal" style="margin-top: 40px; padding: 36px;">
+          <div style="display: flex; align-items: flex-start; gap: 36px; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 280px;">
+              <h3
+                style="font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; margin-bottom: 12px; color: var(--aurora-gold);">
+                ★ The Bortle Dark-Sky Scale</h3>
+              <p style="font-size: 0.9rem; color: var(--star-dim); line-height: 1.8; margin-bottom: 20px;">The Bortle
+                Scale (1–9) measures sky darkness. Class 1 is the darkest achievable sky — so dark you can see your
+                shadow cast by the Milky Way. All our sites are Class 1–3.</p>
+              <div style="display: flex; gap: 8px;">
+                <span class="btn btn-sm btn-gold">Our Sites: Class 1–3 ★</span>
+              </div>
+            </div>
+            <div style="flex: 2; min-width: 300px;">
+              <div style="display: flex; align-items: flex-end; gap: 3px; height: 80px; margin-bottom: 12px;">
+                <div
+                  style="flex:1; height: 85%; background: linear-gradient(180deg, #4a6cf7, #2c3e8c); border-radius: 6px 6px 0 0; position: relative; cursor: pointer;"
+                  title="Class 1 - Darkest Sky">
+                  <span
+                    style="position: absolute; top: -24px; left: 50%; transform: translateX(-50%); font-size: 0.6rem; color: var(--aurora-teal); font-weight: 700; white-space: nowrap;">1★</span>
+                </div>
+                <div
+                  style="flex:1; height: 75%; background: linear-gradient(180deg, #00d4c8, #00a09c); border-radius: 6px 6px 0 0;"
+                  title="Class 2"></div>
+                <div
+                  style="flex:1; height: 65%; background: linear-gradient(180deg, #f5c842, #d4a830); border-radius: 6px 6px 0 0;"
+                  title="Class 3"></div>
+                <div
+                  style="flex:1; height: 55%; background: linear-gradient(180deg, #ff8c42, #e07030); border-radius: 6px 6px 0 0; opacity: 0.7;"
+                  title="Class 4"></div>
+                <div
+                  style="flex:1; height: 45%; background: linear-gradient(180deg, #ff6b9d, #e0508a); border-radius: 6px 6px 0 0; opacity: 0.6;">
+                </div>
+                <div
+                  style="flex:1; height: 35%; background: rgba(255,255,255,0.2); border-radius: 6px 6px 0 0; opacity: 0.5;">
+                </div>
+                <div
+                  style="flex:1; height: 30%; background: rgba(255,255,255,0.2); border-radius: 6px 6px 0 0; opacity: 0.45;">
+                </div>
+                <div
+                  style="flex:1; height: 22%; background: rgba(255,255,255,0.2); border-radius: 6px 6px 0 0; opacity: 0.3;">
+                </div>
+                <div
+                  style="flex:1; height: 14%; background: rgba(255,255,255,0.2); border-radius: 6px 6px 0 0; opacity: 0.2;">
+                </div>
+              </div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                <span style="font-size: 0.72rem; color: var(--aurora-teal); font-weight: 700;">Class 1 (Darkest)</span>
+                <span style="font-size: 0.72rem; color: var(--star-faint);">Class 9 (Bright City)</span>
+              </div>
+              <div style="display: flex; gap: 3px; height: 6px; border-radius: 3px; overflow: hidden;">
+                <div style="flex:3; background: linear-gradient(90deg, #4a6cf7, #00d4c8, #f5c842);"
+                  title="Our locations"></div>
+                <div style="flex:6; background: rgba(255,255,255,0.08);"></div>
+              </div>
+              <p style="font-size: 0.7rem; color: var(--star-faint); margin-top: 6px;">↑ Our locations span this range
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ EQUIPMENT SECTION ═══════════ -->
+    <section class="section" id="equipment">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">✦ Telescope Rentals</div>
+          <h2 class="section-title">Premium Equipment<br>At Every Site</h2>
+          <p class="section-subtitle">From beginner-friendly refractors to observatory-grade Dobsonians — all
+            instruments are collimated, aligned and ready to explore.</p>
+        </div>
+
+        <div class="glass-card reveal">
+          <div style="overflow-x: auto;">
+            <table class="specs-table">
+              <thead>
+                <tr>
+                  <th>Instrument</th>
+                  <th>Aperture</th>
+                  <th>Focal Length</th>
+                  <th>Mount Type</th>
+                  <th>Best For</th>
+                  <th>Bortle Min.</th>
+                  <th>Rental / Night</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong style="color: var(--star-white);">◖ Celestron StarSense 90</strong></td>
+                  <td><span class="event-type-badge badge-meteor" style="font-size:0.7rem;">90mm</span></td>
+                  <td>910mm</td>
+                  <td>Altazimuth GoTo</td>
+                  <td>Moon, Planets</td>
+                  <td>Bortle ≤6</td>
+                  <td><strong style="color: var(--aurora-gold);">₹999</strong></td>
+                </tr>
+                <tr>
+                  <td><strong style="color: var(--star-white);">◖ Sky-Watcher 130PDS</strong></td>
+                  <td><span class="event-type-badge badge-eclipse" style="font-size:0.7rem;">130mm</span></td>
+                  <td>650mm</td>
+                  <td>EQ3 Equatorial</td>
+                  <td>Deep Sky, Galaxies</td>
+                  <td>Bortle ≤4</td>
+                  <td><strong style="color: var(--aurora-gold);">₹1,799</strong></td>
+                </tr>
+                <tr>
+                  <td><strong style="color: var(--star-white);">◖ Dobsonian 10"</strong></td>
+                  <td><span class="event-type-badge badge-comet" style="font-size:0.7rem;">254mm</span></td>
+                  <td>1,200mm</td>
+                  <td>Dobsonian Alt-Az</td>
+                  <td>Nebulae, Star Clusters</td>
+                  <td>Bortle ≤3</td>
+                  <td><strong style="color: var(--aurora-gold);">₹3,299</strong></td>
+                </tr>
+                <tr>
+                  <td><strong style="color: var(--star-white);">◖ Celestron CPC 1100</strong></td>
+                  <td><span class="event-type-badge badge-planet" style="font-size:0.7rem;">280mm</span></td>
+                  <td>2,800mm</td>
+                  <td>GPS GoTo Cassegrain</td>
+                  <td>Planets, Binary Stars</td>
+                  <td>Bortle ≤4</td>
+                  <td><strong style="color: var(--aurora-gold);">₹4,999</strong></td>
+                </tr>
+                <tr>
+                  <td><strong style="color: var(--star-white);">◖ Observatory Ritchey 16"</strong></td>
+                  <td><span class="event-type-badge badge-lunar" style="font-size:0.7rem;">406mm</span></td>
+                  <td>3,657mm</td>
+                  <td>Equatorial GoTo</td>
+                  <td>Astrophotography</td>
+                  <td>Bortle ≤2</td>
+                  <td><strong style="color: var(--aurora-gold);">₹9,999</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p style="font-size: 0.78rem; color: var(--star-faint); margin-top: 16px; text-align: center;">All rentals
+            include eyepiece set, red-light torch, star charts &amp; 30-min orientation session with our astronomers.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ PRICING SECTION ═══════════ -->
+    <section class="section" id="pricing"
+      style="background: linear-gradient(180deg, transparent, rgba(123,94,167,0.05) 50%, transparent);">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">✦ Transparent Pricing</div>
+          <h2 class="section-title">Choose Your<br>Viewing Experience</h2>
+          <p class="section-subtitle">Every package includes cloud-out insurance. If weather ruins your night, get a
+            full refund — no questions asked.</p>
+        </div>
+
+        <div class="pricing-grid">
+          <!-- Starter -->
+          <div class="pricing-card reveal">
+            <div class="pricing-tier">★ Stargazer</div>
+            <div class="pricing-price"><sup>₹</sup>3,999</div>
+            <div class="pricing-period">per person · single night</div>
+            <ul class="pricing-features">
+              <li><span class="check">✦</span> Dark-sky site entry</li>
+              <li><span class="check">✦</span> 90mm refractor telescope</li>
+              <li><span class="check">✦</span> Star chart &amp; red torch</li>
+              <li><span class="check">✦</span> Expert guide commentary</li>
+              <li><span class="check">✦</span> Cloud-out insurance</li>
+              <li><span class="check">✦</span> Hot beverages included</li>
+            </ul>
+            <a href="booking.html?pkg=stargazer" class="btn btn-secondary"
+              style="width:100%; justify-content: center;">Get Started</a>
+          </div>
+
+          <!-- Most Popular -->
+          <div class="pricing-card featured reveal reveal-delay-1">
+            <div class="pricing-tier">◒ Explorer</div>
+            <div class="pricing-price"><sup>₹</sup>8,499</div>
+            <div class="pricing-period">per person · 2 nights</div>
+            <ul class="pricing-features">
+              <li><span class="check">✦</span> Premium Bortle 1–2 site</li>
+              <li><span class="check">✦</span> 10" Dobsonian telescope</li>
+              <li><span class="check">✦</span> Astrophotography session</li>
+              <li><span class="check">✦</span> Personalised sky tour</li>
+              <li><span class="check">✦</span> Cloud-out insurance</li>
+              <li><span class="check">✦</span> Campfire &amp; dinner</li>
+              <li><span class="check">✦</span> Digital photos included</li>
+            </ul>
+            <a href="booking.html?pkg=explorer" class="btn btn-primary"
+              style="width:100%; justify-content: center;">Book Explorer</a>
+          </div>
+
+          <!-- Observatory -->
+          <div class="pricing-card reveal reveal-delay-2">
+            <div class="pricing-tier">◖ Observatory</div>
+            <div class="pricing-price"><sup>₹</sup>18,999</div>
+            <div class="pricing-period">per person · 3 nights</div>
+            <ul class="pricing-features">
+              <li><span class="check">✦</span> Exclusive Bortle 1 site</li>
+              <li><span class="check">✦</span> 16" Observatory telescope</li>
+              <li><span class="check">✦</span> CCD astrophotography rig</li>
+              <li><span class="check">✦</span> Private astronomer</li>
+              <li><span class="check">✦</span> Cloud-out insurance</li>
+              <li><span class="check">✦</span> Luxury accommodation</li>
+              <li><span class="check">✦</span> All meals &amp; transfers</li>
+              <li><span class="check">✦</span> Printed astro prints</li>
+            </ul>
+            <a href="booking.html?pkg=observatory" class="btn btn-gold" style="width:100%; justify-content: center;">Go
+              Premium</a>
+          </div>
+
+          <!-- Group -->
+          <div class="pricing-card reveal reveal-delay-3">
+            <div class="pricing-tier">◨ Group Viewing</div>
+            <div class="pricing-price"><sup>₹</sup>2,299</div>
+            <div class="pricing-period">per person · min 10 people</div>
+            <ul class="pricing-features">
+              <li><span class="check">✦</span> Group site access</li>
+              <li><span class="check">✦</span> Multiple telescopes</li>
+              <li><span class="check">✦</span> Guided constellation tour</li>
+              <li><span class="check">✦</span> Cloud-out insurance</li>
+              <li><span class="check">✦</span> Group discounts available</li>
+              <li><span class="check">✦</span> Perfect for schools &amp; clubs</li>
+            </ul>
+            <a href="booking.html?pkg=group&people=10" class="btn btn-secondary"
+              style="width:100%; justify-content: center;">Book Group</a>
+          </div>
+        </div>
+
+        <!-- Cloud-Out Insurance Banner -->
+        <div class="insurance-banner reveal" style="margin-top: 48px;">
+          <div>
+            <h3 style="font-family: var(--font-display); font-size: 1.5rem; font-weight: 800; margin-bottom: 8px;">
+              ◌ Cloud-Out Insurance — Always Included
+            </h3>
+            <p style="color: var(--star-dim); font-size: 0.95rem; line-height: 1.7; max-width: 560px;">
+              If cloud cover exceeds 50% during your session, we issue a <strong style="color: var(--aurora-teal);">full
+                refund</strong> automatically — no forms, no hassle. Our real-time forecast system monitors conditions
+              every 15 minutes.
+            </p>
+          </div>
+          <div style="flex-shrink: 0; text-align: center;">
+            <div
+              style="font-family: var(--font-display); font-size: 3rem; font-weight: 900; color: var(--aurora-teal);">
+              100%</div>
+            <div style="font-size: 0.85rem; color: var(--star-dim);">Refund if cloudy</div>
+            <a href="forecast.html" class="btn btn-sm btn-secondary" style="margin-top: 12px; display: inline-flex;">◑
+              Forecast →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ BOOKING MODAL ═══════════ -->
+    <div class="modal-overlay" id="bookingModal">
+      <div class="modal">
+        <div class="modal-header">
+          <h3 class="modal-title">⊙ Book Your Experience</h3>
+          <button class="modal-close" onclick="closeBooking()">✕</button>
+        </div>
+        <div id="modalEventName"
+          style="display: inline-flex; align-items: center; gap: 8px; background: rgba(74,108,247,0.12); border: var(--border-glow); border-radius: 8px; padding: 8px 18px; font-size: 0.85rem; color: var(--aurora-blue); font-weight: 600; margin-bottom: 24px;">
+        </div>
+        <form id="bookingForm" onsubmit="submitBooking(event)">
+          <div class="form-group">
+            <label class="form-label">Full Name</label>
+            <input type="text" class="form-input" id="bookName" placeholder="Dr. Carl Sagan" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input type="email" class="form-input" id="bookEmail" placeholder="you@cosmos.space" required />
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <div class="form-group">
+              <label class="form-label">Number of People</label>
+              <select class="form-select" id="bookPeople">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option value="10+">10+ (Group)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Package Tier</label>
+              <select class="form-select" id="bookTier">
+                <option>Stargazer (₹3,999)</option>
+                <option selected>Explorer (₹8,499)</option>
+                <option>Observatory (₹18,999)</option>
+                <option>Group (₹2,299 pp)</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Preferred Date</label>
+            <input type="date" class="form-input" id="bookDate" />
+          </div>
+          <div class="form-group"
+            style="display: flex; align-items: center; gap: 12px; padding: 14px; background: rgba(0,212,200,0.06); border: 1px solid rgba(0,212,200,0.2); border-radius: 10px;">
+            <span style="font-size: 1.4rem;">◌</span>
+            <div>
+              <div style="font-size: 0.85rem; font-weight: 600; color: var(--aurora-teal);">Cloud-Out Insurance Included
+              </div>
+              <div style="font-size: 0.75rem; color: var(--star-faint);">Full refund if cloud cover &gt;50% —
+                automatically applied</div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary"
+            style="width: 100%; justify-content: center; margin-top: 8px;">Confirm Booking →</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- ═══════════ TOAST CONTAINER ═══════════ -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- ═══════════ FOOTER ═══════════ -->
+    <footer class="footer" id="booking">
+      <div class="footer-grid">
+        <div>
+          <a href="index.html" class="nav-logo" style="margin-bottom: 16px; display: inline-flex;">
+            <div class="nav-logo-icon">⊙</div>
+            <span class="nav-logo-text">SkyWatch</span>
+          </a>
+          <p class="footer-brand-desc">India's premier dark-sky astronomy tour operator. Connecting stargazers with the
+            universe's most spectacular events since 2019.</p>
+          <div class="footer-social">
+            <a href="#">𝕏</a>
+            <a href="#">◎</a>
+            <a href="#">▶</a>
+            <a href="#">in</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Experiences</h4>
+          <ul>
+            <li><a href="events.html">Event Calendar</a></li>
+            <li><a href="index.html#tours">Dark-Sky Tours</a></li>
+            <li><a href="index.html#equipment">Telescope Rentals</a></li>
+            <li><a href="forecast.html">Sky Forecast</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#">About SkyWatch</a></li>
+            <li><a href="#">Our Astronomers</a></li>
+            <li><a href="#">Locations</a></li>
+            <li><a href="#">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="#">Cloud-Out Policy</a></li>
+            <li><a href="#">Booking FAQ</a></li>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">Safety Guidelines</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 SkyWatch Astronomy Tours. All rights reserved.</p>
+        <p>Built for the stars. 🌌 Designed under dark skies.</p>
+      </div>
+    </footer>
+
+  </div><!-- /page-wrapper -->
+
+  <script src="main.js"></script>
+  <script>
+    // Page-specific: open booking modal pre-filled
+    function openBooking(eventName) {
+      document.getElementById('modalEventName').textContent = '🌟 ' + eventName;
+      document.getElementById('bookingModal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeBooking() {
+      document.getElementById('bookingModal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    document.getElementById('bookingModal').addEventListener('click', function (e) {
+      if (e.target === this) closeBooking();
+    });
+    function submitBooking(e) {
+      e.preventDefault();
+      closeBooking();
+      showToast('🚀', 'Booking confirmed! Check your email for details.');
+    }
+
+    // Strip event marquee
+    const strip = document.querySelector('[style*="overflow-x: auto"]');
+    if (strip) {
+      let scroll = 0;
+      setInterval(() => {
+        scroll += 0.5;
+        if (scroll >= strip.scrollWidth - strip.clientWidth) scroll = 0;
+        strip.scrollLeft = scroll;
+      }, 30);
+    }
+  </script>
+</body>
+
+</html>

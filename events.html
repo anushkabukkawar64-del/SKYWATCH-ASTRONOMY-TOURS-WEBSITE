@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Celestial Events Calendar — SkyWatch Astronomy Tours</title>
+    <meta name="description"
+        content="Browse our complete celestial event calendar: eclipses, meteor showers, planetary conjunctions, comets and more. Book your dark-sky experience today." />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔭</text></svg>" />
+</head>
+
+<body>
+
+    <canvas id="starfield"></canvas>
+
+    <div class="page-wrapper">
+
+        <!-- ═══════════ NAVBAR ═══════════ -->
+        <nav class="navbar" id="mainNav">
+            <a href="index.html" class="nav-logo">
+                <div class="nav-logo-icon">🔭</div>
+                <span class="nav-logo-text">SkyWatch</span>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="events.html" class="active">Events</a></li>
+                <li><a href="forecast.html">Forecast</a></li>
+                <li><a href="index.html#tours">Tours</a></li>
+                <li><a href="index.html#equipment">Equipment</a></li>
+                <li><a href="index.html#pricing">Pricing</a></li>
+                <li><a href="booking.html" class="nav-cta btn">Book Now</a></li>
+            </ul>
+            <div class="nav-hamburger" id="hamburger" onclick="toggleMenu()">
+                <span></span><span></span><span></span>
+            </div>
+        </nav>
+
+        <!-- ═══════════ PAGE HERO ═══════════ -->
+        <section
+            style="padding: clamp(120px,15vw,180px) clamp(20px,4vw,60px) 60px; text-align: center; position: relative; overflow: hidden;">
+            <!-- Decorative nebula blobs -->
+            <div
+                style="position:absolute;top:-80px;left:10%;width:400px;height:400px;background:radial-gradient(circle,rgba(74,108,247,0.12) 0%,transparent 70%);border-radius:50%;filter:blur(60px);pointer-events:none;">
+            </div>
+            <div
+                style="position:absolute;bottom:-80px;right:10%;width:320px;height:320px;background:radial-gradient(circle,rgba(123,94,167,0.1) 0%,transparent 70%);border-radius:50%;filter:blur(60px);pointer-events:none;">
+            </div>
+
+            <div class="container" style="position:relative;z-index:2;">
+                <div class="section-tag" style="justify-content:center;">✦ 2026 Celestial Calendar</div>
+                <h1 class="section-title" style="font-size: clamp(2.4rem,6vw,4.5rem);">
+                    <span
+                        style="background:linear-gradient(135deg,#e8edf8,#4a6cf7,#00d4c8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Celestial
+                        Events</span>
+                </h1>
+                <p class="section-subtitle" style="margin-bottom: 36px;">Eclipses, meteor showers, planetary
+                    conjunctions, lunar phenomena and more. Every event is paired with expert guides and the perfect
+                    dark-sky location.</p>
+
+                <!-- Live clock & moon phase mini-widget -->
+                <div
+                    style="display:inline-flex;align-items:center;gap:20px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:14px 28px;flex-wrap:wrap;justify-content:center;">
+                    <div style="display:flex;align-items:center;gap:8px;">
+                        <span class="status-dot" style="background:var(--aurora-teal);"></span>
+                        <span style="font-family:var(--font-mono);font-size:0.8rem;color:var(--star-dim);">Live Sky
+                            Status</span>
+                    </div>
+                    <div id="liveDateTime"
+                        style="font-family:var(--font-mono);font-size:0.85rem;color:var(--aurora-blue);font-weight:700;">
+                    </div>
+                    <div id="moonPhaseWidget"
+                        style="display:flex;align-items:center;gap:8px;font-size:0.85rem;color:var(--aurora-gold);">
+                    </div>
+                    <a href="forecast.html" class="btn btn-sm btn-secondary">See Full Forecast →</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════ CALENDAR SECTION ═══════════ -->
+        <section class="section" style="padding-top: 20px;">
+            <div class="container">
+
+                <!-- Filter Bar -->
+                <div class="filter-bar" id="filterBar">
+                    <span
+                        style="font-size:0.75rem;color:var(--star-faint);font-weight:700;letter-spacing:0.08em;padding:0 8px;">FILTER:</span>
+                    <button class="filter-btn active" data-filter="all" onclick="filterEvents('all', this)">All
+                        Events</button>
+                    <button class="filter-btn" data-filter="eclipse" onclick="filterEvents('eclipse', this)">🌑
+                        Eclipses</button>
+                    <button class="filter-btn" data-filter="meteor" onclick="filterEvents('meteor', this)">🌠 Meteor
+                        Showers</button>
+                    <button class="filter-btn" data-filter="lunar" onclick="filterEvents('lunar', this)">🌕
+                        Lunar</button>
+                    <button class="filter-btn" data-filter="planet" onclick="filterEvents('planet', this)">🪐
+                        Planetary</button>
+                    <button class="filter-btn" data-filter="comet" onclick="filterEvents('comet', this)">☄️
+                        Comets</button>
+                    <div style="margin-left:auto;display:flex;gap:8px;align-items:center;">
+                        <select class="form-select" id="monthFilter" onchange="filterByMonth()"
+                            style="padding:8px 14px;font-size:0.82rem;border-radius:10px;width:auto;">
+                            <option value="all">All Months</option>
+                            <option value="1">January</option>
+                            <option value="2">February</option>
+                            <option value="3">March</option>
+                            <option value="4">April</option>
+                            <option value="5">May</option>
+                            <option value="6">June</option>
+                            <option value="7">July</option>
+                            <option value="8">August</option>
+                            <option value="9">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Result Count -->
+                <div
+                    style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px;">
+                    <p id="eventCount" style="font-size:0.85rem;color:var(--star-dim);"></p>
+                    <div style="display:flex;gap:8px;">
+                        <button id="viewGrid" class="btn btn-sm btn-secondary" onclick="setView('grid')"
+                            style="background:rgba(74,108,247,0.15);border-color:rgba(74,108,247,0.35);color:var(--aurora-blue);">⊞
+                            Grid</button>
+                        <button id="viewList" class="btn btn-sm btn-secondary" onclick="setView('list')">☰ List</button>
+                    </div>
+                </div>
+
+                <!-- Events Container -->
+                <div class="events-grid" id="eventsContainer"></div>
+
+                <!-- No results state -->
+                <div id="noResults" style="display:none;text-align:center;padding:80px 20px;">
+                    <div style="font-size:4rem;margin-bottom:16px;">🌌</div>
+                    <h3
+                        style="font-family:var(--font-display);font-size:1.4rem;margin-bottom:8px;color:var(--star-dim);">
+                        No events found</h3>
+                    <p style="color:var(--star-faint);font-size:0.9rem;">Try adjusting your filters</p>
+                    <button class="btn btn-sm btn-secondary"
+                        onclick="filterEvents('all', document.querySelector('.filter-btn'))"
+                        style="margin-top:16px;">View All Events</button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ═══════════ UPCOMING HIGHLIGHTS SECTION ═══════════ -->
+        <section class="section"
+            style="background: linear-gradient(180deg,transparent,rgba(74,108,247,0.05) 50%,transparent);">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-tag">✦ Peak Season Guide</div>
+                    <h2 class="section-title">Best Months to Visit</h2>
+                    <p class="section-subtitle">Plan your astronomy adventure around India's optimal sky conditions.</p>
+                </div>
+
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;">
+                    <div class="glass-card reveal" style="text-align:center;padding:28px 20px;">
+                        <div style="font-size:2.5rem;margin-bottom:12px;">🌸</div>
+                        <h3
+                            style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;margin-bottom:8px;color:var(--aurora-gold);">
+                            Jan – Feb</h3>
+                        <p style="font-size:0.82rem;color:var(--star-dim);line-height:1.7;">Winter skies: Orion at
+                            zenith, Pleiades, Hyades. Excellent transparency at Hanle &amp; Spiti.</p>
+                        <div style="margin-top:14px;"><span class="event-type-badge badge-planet"
+                                style="font-size:0.68rem;">★★★★★ Star Quality</span></div>
+                    </div>
+                    <div class="glass-card reveal reveal-delay-1" style="text-align:center;padding:28px 20px;">
+                        <div style="font-size:2.5rem;margin-bottom:12px;">🌺</div>
+                        <h3
+                            style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;margin-bottom:8px;color:var(--aurora-gold);">
+                            Mar – Apr</h3>
+                        <p style="font-size:0.82rem;color:var(--star-dim);line-height:1.7;">Eclipse season, Leo triplet
+                            galaxies prominent. Pre-monsoon clearings in Rajasthan desert.</p>
+                        <div style="margin-top:14px;"><span class="event-type-badge badge-eclipse"
+                                style="font-size:0.68rem;">Eclipse Season ★★★★</span></div>
+                    </div>
+                    <div class="glass-card reveal reveal-delay-2" style="text-align:center;padding:28px 20px;">
+                        <div style="font-size:2.5rem;margin-bottom:12px;">☀️</div>
+                        <h3
+                            style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;margin-bottom:8px;color:var(--aurora-pink);">
+                            Jun – Sep</h3>
+                        <p style="font-size:0.82rem;color:var(--star-dim);line-height:1.7;">Monsoon season —
+                            challenging. Best sites: Ladakh &amp; Lahaul above cloud layer. Perseids in Aug.</p>
+                        <div style="margin-top:14px;"><span class="event-type-badge badge-meteor"
+                                style="font-size:0.68rem;">Perseid Shower ★★★</span></div>
+                    </div>
+                    <div class="glass-card reveal reveal-delay-3" style="text-align:center;padding:28px 20px;">
+                        <div style="font-size:2.5rem;margin-bottom:12px;">🍂</div>
+                        <h3
+                            style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;margin-bottom:8px;color:var(--aurora-gold);">
+                            Oct – Dec</h3>
+                        <p style="font-size:0.82rem;color:var(--star-dim);line-height:1.7;">Post-monsoon excellence.
+                            Geminids in Dec (150/hr). Andromeda galaxy at its finest. Best overall.</p>
+                        <div style="margin-top:14px;"><span class="event-type-badge badge-comet"
+                                style="font-size:0.68rem;">Peak Season ★★★★★</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════ BOOKing CTA ═══════════ -->
+        <section class="section" style="padding-top:0;">
+            <div class="container">
+                <div class="insurance-banner">
+                    <div>
+                        <h3 style="font-family:var(--font-display);font-size:1.4rem;font-weight:800;margin-bottom:8px;">
+                            Ready to Witness Something Extraordinary?</h3>
+                        <p style="color:var(--star-dim);font-size:0.9rem;max-width:500px;line-height:1.7;">Every booking
+                            includes cloud-out insurance. Guides with 10+ years of astronomical experience. Next
+                            available slots are filling fast for 2026 eclipses.</p>
+                    </div>
+                    <div style="display:flex;gap:12px;flex-wrap:wrap;flex-shrink:0;">
+                        <a href="forecast.html" class="btn btn-secondary">🌤️ Check Forecast</a>
+                        <a href="index.html#pricing" class="btn btn-primary">🔭 Book Now</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Modal -->
+        <div class="modal-overlay" id="eventModal">
+            <div class="modal" style="max-width: 620px;">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="modalTitle">Event Details</h3>
+                    <button class="modal-close" onclick="closeEventModal()">✕</button>
+                </div>
+                <div id="modalContent"></div>
+            </div>
+        </div>
+
+        <div class="toast-container" id="toastContainer"></div>
+
+        <!-- ═══════════ FOOTER ═══════════ -->
+        <footer class="footer">
+            <div class="footer-grid">
+                <div>
+                    <a href="index.html" class="nav-logo" style="margin-bottom:16px;display:inline-flex;">
+                        <div class="nav-logo-icon">🔭</div>
+                        <span class="nav-logo-text">SkyWatch</span>
+                    </a>
+                    <p class="footer-brand-desc">India's premier dark-sky astronomy tour operator.</p>
+                    <div class="footer-social">
+                        <a href="#">🐦</a><a href="#">📸</a><a href="#">▶️</a><a href="#">💼</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Experiences</h4>
+                    <ul>
+                        <li><a href="events.html">Event Calendar</a></li>
+                        <li><a href="index.html#tours">Dark-Sky Tours</a></li>
+                        <li><a href="index.html#equipment">Telescope Rentals</a></li>
+                        <li><a href="forecast.html">Sky Forecast</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About SkyWatch</a></li>
+                        <li><a href="#">Our Astronomers</a></li>
+                        <li><a href="#">Locations</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Cloud-Out Policy</a></li>
+                        <li><a href="#">Booking FAQ</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Safety Guidelines</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 SkyWatch Astronomy Tours. All rights reserved.</p>
+                <p>Built for the stars. 🌌</p>
+            </div>
+        </footer>
+
+    </div>
+
+    <script src="main.js"></script>
+    <script src="events.js"></script>
+</body>
+
+</html>
